@@ -22,7 +22,7 @@ import data from "@/data/nba-teams.json";
 
 const frameworks = data.teams;
 
-export function ComboboxDemo() {
+export function ComboboxTeams() {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
 

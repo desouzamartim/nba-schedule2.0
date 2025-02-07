@@ -11,14 +11,17 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {  Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
- 
+import { Switch } from "@/components/ui/switch";
+import { Card, CardContent, CardDescription } from "@/components/ui/card";
+
 const FormSchema = z.object({
   dob: z.date({
     required_error: "A date of birth is required.",
   }),
 })
 
-import { ComboboxDemo } from "./combobox/combobox";
+import { ComboboxTeams } from "./combobox-team/combobox";
+import { ComboboxBroadcast } from "./combobox-broadcast/combobox";
 
 export const Header = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -38,8 +41,9 @@ export const Header = () => {
 
   return (
     <header className="flex justify-between items-center bg-slate-900 p-5 rounded-sm shadow-md">
-      <div className="max-w-4xl mx-auto flex gap-5">
-        <ComboboxDemo />
+      <div className="max-w-5xl mx-auto flex gap-5">
+        <ComboboxTeams />
+        <ComboboxBroadcast />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -83,6 +87,12 @@ export const Header = () => {
             />
           </form>
         </Form>
+        <Card className="rounded-md flex items-center">
+          <CardContent className="flex gap-3 p-1 px-6">
+            <CardDescription>Transmissões brasileiras</CardDescription>
+            <Switch />
+          </CardContent>
+        </Card>
       </div>
     </header>
   )
