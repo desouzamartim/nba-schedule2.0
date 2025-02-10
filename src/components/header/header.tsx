@@ -41,7 +41,7 @@ export const Header = () => {
 
   return (
     <header className="flex justify-between items-center bg-slate-900 p-5 rounded-sm shadow-md">
-      <div className="max-w-5xl mx-auto flex gap-5">
+      <div className="max-w-4xl mx-auto flex gap-5">
         <ComboboxTeams />
         <ComboboxBroadcast />
         <Form {...form}>
@@ -57,7 +57,7 @@ export const Header = () => {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
+                            "w-[200px] pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground"
                           )}
                         >
