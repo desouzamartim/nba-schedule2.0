@@ -1,70 +1,46 @@
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const invoices = [
   {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
+    id: '1',
+    timeCasa: "Golden State Warriors",
+    altCasa: 'warriors',
+    timeFora: "Los Angeles Lakers",
+    altFora: 'lakers',
+    data: "23/01/2025 - 21:30",
+    transmissao: "ESPN",
   },
   {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
+    id: '2',
+    timeCasa: "Los Angeles Lakers",
+    altCasa: 'warriors',
+    timeFora: "Golden State Warriors",
+    altFora: 'lakers',
+    data: "23/01/2025 - 21:30",
+    transmissao: "NBA League Pass",
   },
   {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
+    id: '3',
+    timeCasa: "Golden State Warriors",
+    altCasa: 'warriors',
+    timeFora: "Minnesota timberwolves",
+    altFora: 'lakers',
+    data: "23/01/2025 - 21:30",
+    transmissao: "Prime Video",
   },
   {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
+    id: '4',
+    timeCasa: "Golden State Warriors",
+    altCasa: 'warriors',
+    timeFora: "Minnesota timberwolves",
+    altFora: 'lakers',
+    data: "23/01/2025 - 21:30",
+    transmissao: "Youtube",
+  }
 ]
  
-
 export const BodyCard = () => {
   return (
     <div className="w-full max-w-4xl m-auto mt-5">
@@ -80,15 +56,28 @@ export const BodyCard = () => {
           </TableHeader>
           <TableBody>
             {invoices.map((invoice) => (
-              <TableRow key={invoice.invoice}>
-                <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                <TableCell>{invoice.paymentStatus}</TableCell>
-                <TableCell>{invoice.paymentMethod}</TableCell>
-                <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+              <TableRow key={invoice.id}>
+                <TableCell>
+                  <div  className="font-medium flex items-center">
+                    <img src={`../images/nbalogos/${invoice.altCasa}.png`} className="mr-3 w-8"/>
+                    {invoice.timeCasa}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div  className="flex items-center">
+                    <img src={`../images/nbalogos/${invoice.altFora}.png`} className="mr-3 w-8"/>
+                    {invoice.timeFora}
+                  </div>
+                </TableCell>
+                <TableCell>{invoice.data}</TableCell>
+                <TableCell className="text-right">{invoice.transmissao}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        <div className="w-full flex items-center justify-center mt-5 mb-2">
+          <Button variant={"ghost"} className="px-24">Exibir mais jogos</Button>
+        </div>
       </Card>
     </div>
   )
