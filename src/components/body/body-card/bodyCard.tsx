@@ -2,46 +2,18 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-const invoices = [
-  {
-    id: '1',
-    timeCasa: "Golden State Warriors",
-    altCasa: 'warriors',
-    timeFora: "Los Angeles Lakers",
-    altFora: 'lakers',
-    data: "23/01/2025 - 21:30",
-    transmissao: "ESPN",
-  },
-  {
-    id: '2',
-    timeCasa: "Los Angeles Lakers",
-    altCasa: 'warriors',
-    timeFora: "Golden State Warriors",
-    altFora: 'lakers',
-    data: "23/01/2025 - 21:30",
-    transmissao: "NBA League Pass",
-  },
-  {
-    id: '3',
-    timeCasa: "Golden State Warriors",
-    altCasa: 'warriors',
-    timeFora: "Minnesota timberwolves",
-    altFora: 'lakers',
-    data: "23/01/2025 - 21:30",
-    transmissao: "Prime Video",
-  },
-  {
-    id: '4',
-    timeCasa: "Golden State Warriors",
-    altCasa: 'warriors',
-    timeFora: "Minnesota timberwolves",
-    altFora: 'lakers',
-    data: "23/01/2025 - 21:30",
-    transmissao: "Youtube",
-  }
-]
- 
-export const BodyCard = () => {
+
+type Game = {
+  id: string,
+  awayTeam: string,
+  awayTeamShortName: string,
+  homeTeam: string,
+  homeTeamShortName: string,
+  gameDateTimeUTC: string,
+  broadcaster: string,
+};
+
+export const BodyCard = ({ data }: { data: Game[] }) => {
   return (
     <div className="w-full max-w-4xl m-auto mt-5">
       <Card className="p-5">
@@ -55,22 +27,22 @@ export const BodyCard = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {invoices.map((invoice) => (
-              <TableRow key={invoice.id}>
+            {data.map((game) => (
+              <TableRow key={game.id}>
                 <TableCell>
                   <div  className="font-medium flex items-center">
-                    <img src={`../images/nbalogos/${invoice.altCasa}.png`} className="mr-3 w-8"/>
-                    {invoice.timeCasa}
+                    <img src={`../images/nbalogos/${game.homeTeamShortName}.png`} className="mr-3 w-8"/>
+                    {game.homeTeam}
                   </div>
                 </TableCell>
                 <TableCell>
                   <div  className="flex items-center">
-                    <img src={`../images/nbalogos/${invoice.altFora}.png`} className="mr-3 w-8"/>
-                    {invoice.timeFora}
+                    <img src={`../images/nbalogos/${game.awayTeamShortName}.png`} className="mr-3 w-8"/>
+                    {game.awayTeam}
                   </div>
                 </TableCell>
-                <TableCell>{invoice.data}</TableCell>
-                <TableCell className="text-right">{invoice.transmissao}</TableCell>
+                <TableCell>{game.gameDateTimeUTC}</TableCell>
+                <TableCell className="text-right">{game.broadcaster}</TableCell>
               </TableRow>
             ))}
           </TableBody>

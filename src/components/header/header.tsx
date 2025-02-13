@@ -13,6 +13,18 @@ import {  Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
+import { ComboboxBroadcast } from "./combobox-broadcast/combobox";
+import { ComboboxTeams } from "./combobox-team/combobox";
+
+type Game = {
+  id: string,
+  awayTeam: string,
+  awayTeamShortName: string,
+  homeTeam: string,
+  homeTeamShortName: string,
+  gameDateTimeUTC: string,
+  broadcaster: string,
+};
 
 const FormSchema = z.object({
   dob: z.date({
@@ -20,10 +32,10 @@ const FormSchema = z.object({
   }),
 })
 
-import { ComboboxTeams } from "./combobox-team/combobox";
-import { ComboboxBroadcast } from "./combobox-broadcast/combobox";
+export const Header = ({ games }: { games: Game[] }) => {
+  
+  const list = games;
 
-export const Header = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
@@ -75,9 +87,6 @@ export const Header = () => {
                         mode="single"
                         selected={field.value}
                         onSelect={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
                         initialFocus
                       />
                     </PopoverContent>

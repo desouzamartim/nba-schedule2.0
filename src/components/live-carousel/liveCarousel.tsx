@@ -5,20 +5,55 @@ import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carouse
 import Autoplay from "embla-carousel-autoplay";
 import { LiveCard } from "./liveCard";
 
-export function LiveCarousel() {
-  const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
-  )
+type Game = {
+  id: string;
+  awayTeam: string;
+  awayTeamShortName: string;
+  homeTeam: string;
+  homeTeamShortName: string;
+  gameDateTimeUTC: string;
+  broadcaster: string;
+};
 
-  const data = {
-    hora: "21:30",
-    transmissao: "Prime Video",
-    timeCasa: "warriors",
-    timeFora: "lakers"
+export function LiveCarousel({ games }: { games: Game[] }) {
+  const plugin = React.useRef(
+    Autoplay({ delay: 2500, stopOnInteraction: true })
+  );
+
+  const filterGames = (games: Game[]) => {
+    const now = new Date();
+    const agora = new Date(now.getTime() - 3 * 60 * 60 * 1000);
+    const twoHoursAndThirtyMinutesAgo = new Date(now.getTime() - 5 * 60 * 60 * 1000);
+  
+    return games.filter((game) => {
+      const gameTime = new Date(game.gameDateTimeUTC);
+      console.log(agora)
+      return gameTime < agora && gameTime > twoHoursAndThirtyMinutesAgo;
+    });
+  };
+
+  const filteredGames = filterGames(games);
+
+  function formatGameDateTime(gameDateTimeUTC: string): string {
+    const date = new Date(gameDateTimeUTC);
+  
+    const formattedDate = date.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+    });
+  
+
+    const formattedTime = date.toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+  
+    return `${formattedDate} - ${formattedTime}`;
   }
 
   return (
-    <div className="w-full flex justify-center py-3 bg-slate-900 ">
+    <div className="w-full flex justify-center py-3 bg-slate-900">
       <Carousel
         plugins={[plugin.current]}
         opts={{
@@ -26,14 +61,25 @@ export function LiveCarousel() {
         }}
         className="w-full max-w-4xl"
       >
-        <CarouselContent className="">
-          {Array.from({ length: 8 }).map((_, index) => (
-            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
-              <LiveCard hora={data.hora} transmissao={data.transmissao} timeCasa={data.timeCasa} timeFora={data.timeFora} />
-            </CarouselItem>
-          ))}
+        <CarouselContent>
+          {filteredGames.length > 0 ? (
+            filteredGames.map((game) => (
+              <CarouselItem key={game.id} className="md:basis-1/2 lg:basis-1/3">
+                <LiveCard
+                  hora={ formatGameDateTime(game.gameDateTimeUTC)}
+                  transmissao={game.broadcaster}
+                  timeCasa={game.homeTeamShortName}
+                  timeFora={game.awayTeamShortName}
+                />
+              </CarouselItem>
+            ))
+          ) : (
+            <div className="text-white text-center w-full py-6">
+              Nenhum jogo ao vivo no momento.
+            </div>
+          )}
         </CarouselContent>
-    </Carousel>
+      </Carousel>
     </div>
-  )
+  );
 }
