@@ -27,7 +27,6 @@ export function LiveCarousel({ games }: { games: Game[] }) {
   
     return games.filter((game) => {
       const gameTime = new Date(game.gameDateTimeUTC);
-      console.log(agora)
       return gameTime < agora && gameTime > twoHoursAndThirtyMinutesAgo;
     });
   };
